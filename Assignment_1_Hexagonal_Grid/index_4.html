@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+uniform mat4 uProjectionMatrix;
+void main(){
+  gl_Position = uProjectionMatrix * vPosition;
+}
+</script>
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+uniform vec3 uBrushColor; // This will hold the RGB color passed from JavaScript
+void main() {
+    gl_FragColor = vec4(uBrushColor, 1.0); // Set the fragment color using the brush color
+}
+</script>
+
+
+<script type="text/javascript" src="Common/webgl-utils.js"></script>
+<script type="text/javascript" src="Common/initShaders.js"></script>
+<script type="text/javascript" src="Common/MV.js"></script>
+<script type="text/javascript" src="mycode.js"></script>
+</head>
+<body>
+
+<!-- Buttons for selecting brush or eraser mode -->
+<button id="brushButton">Brush</button>
+<button id="eraserButton">Eraser</button>
+<button id="zoomButton">Zoom</button>
+<button id="lineButton">Line</button>
+
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+<script type="text/javascript">
+    // Adding event listeners to switch between modes
+    document.getElementById("brushButton").addEventListener("click", function() {
+        currentMode = "brush";
+    });
+
+    document.getElementById("eraserButton").addEventListener("click", function() {
+        currentMode = "eraser";
+    });
+	document.getElementById("zoomButton").addEventListener("click", function() {
+        currentMode = "zoom";
+    });
+	document.getElementById("lineButton").addEventListener("click", function() {
+        currentMode = "line";
+    });
+</script>
+
+<div>
+    <label for="redSlider">Red: </label>
+    <input type="range" id="redSlider" min="0" max="255" value="255">
+    <br>
+    <label for="greenSlider">Green: </label>
+    <input type="range" id="greenSlider" min="0" max="255" value="0">
+    <br>
+    <label for="blueSlider">Blue: </label>
+    <input type="range" id="blueSlider" min="0" max="255" value="0">
+    <br>
+    <div id="colorPreview" style="width: 50px; height: 50px; background-color: rgb(255, 0, 0);"></div>
+</div>
+
+</body>
+</html>
