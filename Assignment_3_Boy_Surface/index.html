@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barkın Saday - Assignment 3 (Boy Surface))</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex; /* Allows centering the canvas */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Use full height of the window */
+            background-color: #f0f0f0; /* Optional background color */
+        }
+        canvas {
+            display: block;
+            width: 90vw; /* Covers 90% of the viewport width */
+            height: 90vh; /* Covers 90% of the viewport height */
+            border: 1px solid #ccc; /* Optional border for visibility */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="glCanvas"></canvas>
+
+    <!-- Buttons -->
+    <div style="position: absolute; top: 10px; left: 10px; z-index: 1; width: 180px;">
+        <button onclick="setDefaultPerspective()">Default Perspective</button>
+        <button onclick="setCornerView()">3D Corner View</button>
+        <button onclick="setCameraToXYPlane()">XY Plane</button>
+        <button onclick="setCameraToNegativeXYPlane()">-XY Plane</button>
+        <button onclick="setCameraToXZPlane()">XZ Plane</button>
+        <button onclick="setCameraToNegativeXZPlane()">-XZ Plane</button>
+        <button onclick="setCameraToYZPlane()">YZ Plane</button>
+        <button onclick="setCameraToNegativeYZPlane()">-YZ Plane</button>
+		
+		<hr style="margin: 10px 0; border: 1px solid #ccc;"> <!-- Space between groups -->
+		
+		<div style="position: absolute; top: 120px; left: 0px; z-index: 1;">
+		<label for="uMin">uMin: </label>
+		<input id="uMin" type="number" step="0.1" value="-1.57" />
+		<label for="uMax">uMax: </label>
+		<input id="uMax" type="number" step="0.1" value="1.57" /><br/>
+
+		<label for="vMin">vMin: </label>
+		<input id="vMin" type="number" step="0.1" value="0" />
+		<label for="vMax">vMax: </label>
+		<input id="vMax" type="number" step="0.1" value="3.14" /><br/>
+
+		<label for="precision">Precision: </label>
+		<input id="precision" type="number" step="0.01" value="0.1" /><br/>
+
+		<button onclick="applyParameters()">Apply</button>
+		
+		<hr style="margin: 80px 0; border: 1px solid #ccc;"> <!-- Space between groups -->
+		
+		
+		<button onclick="toggleColor()">Toggle Color</button>
+		
+</div>
+
+</div>
+
+    </div>
+	
+	<style>
+        .highlight {
+            background-color: #ffe680; /* Highlight color */
+            border: 2px solid #ffaa00; /* Highlight border */
+        }
+    </style>
+
+    <script>
+        // Ensure the WebGL rendering matches the canvas size
+        const canvas = document.getElementById('glCanvas');
+        canvas.width = canvas.clientWidth; // Set canvas resolution to match size
+        canvas.height = canvas.clientHeight;
+
+        // Adjust the WebGL viewport to match canvas size
+        window.addEventListener('resize', () => {
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+            const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+            if (gl) {
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            }
+        });
+		
+    </script>
+    <script src="shaders.js"></script>
+    <script src="MV.js"></script>
+    <script src="utils.js"></script>
+    <script src="main.js"></script>
+</body>
+
+
+</html>
